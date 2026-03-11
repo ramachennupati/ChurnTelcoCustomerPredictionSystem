@@ -34,7 +34,10 @@ DATA_DIR = BASE_DIR / "data" / "processed"
 ARTIFACTS_DIR = BASE_DIR / "artifacts"
 ARTIFACTS_DIR.mkdir(exist_ok=True)
 
-MLFLOW_TRACKING_URI = "file://" + str(BASE_DIR / "mlruns")
+# MLflow setup
+MLRUNS_DIR = BASE_DIR / "mlruns"
+MLRUNS_DIR.mkdir(exist_ok=True)
+MLFLOW_TRACKING_URI = MLRUNS_DIR.absolute().as_uri()
 EXPERIMENT_NAME = "telco-churn-xgboost"
 
 
@@ -115,7 +118,7 @@ def save_shap_plots(model, X_train, feature_names, artifacts_dir):
     }).sort_values("mean_abs_shap", ascending=False)
     importance_df.to_csv(artifacts_dir / "shap_feature_importance.csv", index=False)
 
-    print("   ✅ SHAP plots saved")
+    print("   [PASS] SHAP plots saved")
     return shap_values, explainer, importance_df
 
 
@@ -135,7 +138,7 @@ def explain(customer_features: dict, model, explainer, feature_names: list) -> d
 # PHASE 1: Baseline
 # ─────────────────────────────────────────────
 def run_baseline(X_train, y_train, X_val, y_val, X_test, y_test, features):
-    print("\n🔵 Training BASELINE model...")
+    print("\n[BASELINE] Training BASELINE model...")
     baseline_params = {
         "n_estimators": 100,
         "max_depth": 5,
@@ -184,7 +187,7 @@ def run_baseline(X_train, y_train, X_val, y_val, X_test, y_test, features):
 # PHASE 2: Optuna Hyperparameter Tuning
 # ─────────────────────────────────────────────
 def run_optuna(X_train, y_train, X_val, y_val, X_test, y_test, features, baseline_auc):
-    print("\n🟡 Running Optuna (50 trials)...")
+    print("\n[OPTUNA] Running Optuna (50 trials)...")
 
     def objective(trial):
         params = {
@@ -266,7 +269,7 @@ if __name__ == "__main__":
     os.chdir(BASE_DIR)
 
     X_train, y_train, X_val, y_val, X_test, y_test, features = load_data()
-    print(f"Data loaded → train:{len(X_train)} | val:{len(X_val)} | test:{len(X_test)} | features:{len(features)}")
+    print(f"Data loaded -> train:{len(X_train)} | val:{len(X_val)} | test:{len(X_test)} | features:{len(features)}")
 
     baseline_model, baseline_params, baseline_val, baseline_test, baseline_run_id = \
         run_baseline(X_train, y_train, X_val, y_val, X_test, y_test, features)
@@ -281,7 +284,7 @@ if __name__ == "__main__":
     print(f"  Baseline  Test AUC: {baseline_test['auc_roc']}")
     print(f"  Tuned     Test AUC: {tuned_test['auc_roc']}")
     print(f"  Improvement:        +{improvement:.4f}")
-    print(f"  Acceptance criteria (≥0.82): {'✅ PASS' if tuned_test['auc_roc'] >= 0.82 else '❌ FAIL'}")
+    print(f"  Acceptance criteria (>=0.82): {'[PASS] PASS' if tuned_test['auc_roc'] >= 0.82 else '[FAIL] FAIL'}")
     print(f"  Artifacts saved to: {ARTIFACTS_DIR}")
     print(f"  MLflow runs: {MLFLOW_TRACKING_URI}")
     print(f"{'='*55}")

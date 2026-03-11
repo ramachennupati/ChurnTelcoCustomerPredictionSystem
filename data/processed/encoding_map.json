@@ -1,0 +1,57 @@
+{
+  "gender": {
+    "0": "Female",
+    "1": "Male"
+  },
+  "MultipleLines": {
+    "0": "No",
+    "1": "No phone service",
+    "2": "Yes"
+  },
+  "InternetService": {
+    "0": "DSL",
+    "1": "Fiber optic",
+    "2": "No"
+  },
+  "OnlineSecurity": {
+    "0": "No",
+    "1": "No internet service",
+    "2": "Yes"
+  },
+  "OnlineBackup": {
+    "0": "No",
+    "1": "No internet service",
+    "2": "Yes"
+  },
+  "DeviceProtection": {
+    "0": "No",
+    "1": "No internet service",
+    "2": "Yes"
+  },
+  "TechSupport": {
+    "0": "No",
+    "1": "No internet service",
+    "2": "Yes"
+  },
+  "StreamingTV": {
+    "0": "No",
+    "1": "No internet service",
+    "2": "Yes"
+  },
+  "StreamingMovies": {
+    "0": "No",
+    "1": "No internet service",
+    "2": "Yes"
+  },
+  "Contract": {
+    "0": "Month-to-month",
+    "1": "One year",
+    "2": "Two year"
+  },
+  "PaymentMethod": {
+    "0": "Bank transfer (automatic)",
+    "1": "Credit card (automatic)",
+    "2": "Electronic check",
+    "3": "Mailed check"
+  }
+}

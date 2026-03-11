@@ -28,6 +28,90 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+## Dataset
+
+### Source Information
+
+| Attribute | Details |
+|-----------|---------|
+| **Name** | Telco Customer Churn |
+| **Provider** | IBM Sample Data Sets |
+| **Platform** | Kaggle |
+| **URL** | https://www.kaggle.com/datasets/blastchar/telco-customer-churn |
+| **Records** | 7,043 customers |
+| **Features** | 21 columns |
+
+### How to Download
+
+**Option 1: Kaggle Website**
+1. Go to https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+2. Click "Download" (requires free Kaggle account)
+3. Extract `archive.zip` to get the CSV
+4. Place `WA_Fn-UseC_-Telco-Customer-Churn.csv` in `data/raw/`
+
+**Option 2: Kaggle CLI**
+```bash
+pip install kaggle
+kaggle datasets download -d blastchar/telco-customer-churn
+unzip telco-customer-churn.zip -d data/raw/
+```
+
+**Option 3: Direct from IBM**
+```
+https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113
+```
+
+### Dataset Schema
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `customerID` | string | Unique customer identifier |
+| `gender` | string | Male / Female |
+| `SeniorCitizen` | int | 1 if senior citizen, 0 otherwise |
+| `Partner` | string | Yes / No |
+| `Dependents` | string | Yes / No |
+| `tenure` | int | Months with company (0-72) |
+| `PhoneService` | string | Yes / No |
+| `MultipleLines` | string | Yes / No / No phone service |
+| `InternetService` | string | DSL / Fiber optic / No |
+| `OnlineSecurity` | string | Yes / No / No internet service |
+| `OnlineBackup` | string | Yes / No / No internet service |
+| `DeviceProtection` | string | Yes / No / No internet service |
+| `TechSupport` | string | Yes / No / No internet service |
+| `StreamingTV` | string | Yes / No / No internet service |
+| `StreamingMovies` | string | Yes / No / No internet service |
+| `Contract` | string | Month-to-month / One year / Two year |
+| `PaperlessBilling` | string | Yes / No |
+| `PaymentMethod` | string | Electronic check / Mailed check / Bank transfer / Credit card |
+| `MonthlyCharges` | float | Monthly charge amount |
+| `TotalCharges` | string | Total charges to date (has blanks for new customers) |
+| `Churn` | string | Yes / No (target variable) |
+
+### How the Data Was Originally Collected
+
+This is a **synthetic dataset** created by IBM for educational purposes. It simulates realistic telecom customer data including:
+
+1. **Customer Demographics** - Age, gender, partner/dependent status
+2. **Account Information** - Tenure, contract type, payment method, billing preferences
+3. **Services Subscribed** - Phone, internet, streaming, security, tech support
+4. **Billing Details** - Monthly charges and total charges to date
+5. **Churn Label** - Whether customer left the company (target variable)
+
+### Key Churn Patterns in the Data
+
+The dataset reflects real-world telecom churn patterns:
+
+| Factor | Churn Impact |
+|--------|--------------|
+| Month-to-month contracts | Higher churn risk |
+| Fiber optic internet | Higher churn (often price-sensitive) |
+| Longer tenure | Lower churn (loyalty) |
+| Electronic check payment | Higher churn |
+| Senior citizens | Higher churn |
+| No tech support/security | Higher churn |
+
+---
+
 ## Python Files Functionality
 
 ### 1. `preprocess.py` - Data Pipeline
